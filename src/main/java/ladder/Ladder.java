@@ -1,3 +1,5 @@
+package ladder;
+
 public class Ladder {
 
     private final Row[] rows;
