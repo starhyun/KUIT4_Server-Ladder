@@ -10,8 +10,8 @@ public class Row {
 
     public void drawLine(int startPosition) {
         validateDrawLinePosition(startPosition);
-        row[startPosition] = 1;
-        row[startPosition + 1] = -1;
+        row[startPosition] = Direction.RIGHT.getValue();
+        row[startPosition + 1] = Direction.LEFT.getValue();
     }
 
     public int nextPosition(int position) {
@@ -27,11 +27,11 @@ public class Row {
     }
 
     private boolean isLeft(int position) {
-        return row[position] == -1;
+        return row[position] == Direction.LEFT.getValue();
     }
 
     private boolean isRight(int position) {
-        return row[position] == 1;
+        return row[position] == Direction.RIGHT.getValue();
     }
 
     private void validateNumberOfPerson(int numberOfPerson) {
@@ -47,7 +47,7 @@ public class Row {
     }
 
     private void validateDrawLinePosition(int startPosition) {
-        if (startPosition >= row.length - 1 || startPosition < 0 || row[startPosition] == -1 || row[startPosition + 1] == 1) {
+        if (startPosition >= row.length - 1 || startPosition < 0 || row[startPosition] == Direction.LEFT.getValue() || row[startPosition + 1] == Direction.RIGHT.getValue()) {
             throw new IllegalArgumentException("사다리를 그릴 수 없는 위치입니다.");
         }
     }
