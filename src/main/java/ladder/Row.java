@@ -5,9 +5,8 @@ import static ladder.Direction.*;
 public class Row {
     int[] row;
 
-    public Row(int numberOfPerson) {
-        validateNumberOfPerson(numberOfPerson);
-        row = new int[numberOfPerson];
+    public Row(GreaterThanOne numberOfPerson) {
+        row = new int[numberOfPerson.getNumber()];
     }
 
     public void drawLine(int startPosition) {
