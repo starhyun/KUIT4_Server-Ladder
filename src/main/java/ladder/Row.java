@@ -1,5 +1,7 @@
 package ladder;
 
+import static ladder.Direction.*;
+
 public class Row {
     int[] row;
 
@@ -10,8 +12,8 @@ public class Row {
 
     public void drawLine(int startPosition) {
         validateDrawLinePosition(startPosition);
-        row[startPosition] = Direction.RIGHT.getValue();
-        row[startPosition + 1] = Direction.LEFT.getValue();
+        row[startPosition] = RIGHT.getValue();
+        row[startPosition + 1] = LEFT.getValue();
     }
 
     public int nextPosition(int position) {
@@ -27,11 +29,11 @@ public class Row {
     }
 
     private boolean isLeft(int position) {
-        return row[position] == Direction.LEFT.getValue();
+        return row[position] == LEFT.getValue();
     }
 
     private boolean isRight(int position) {
-        return row[position] == Direction.RIGHT.getValue();
+        return row[position] == RIGHT.getValue();
     }
 
     private void validateNumberOfPerson(int numberOfPerson) {
@@ -47,7 +49,7 @@ public class Row {
     }
 
     private void validateDrawLinePosition(int startPosition) {
-        if (startPosition >= row.length - 1 || startPosition < 0 || row[startPosition] == Direction.LEFT.getValue() || row[startPosition + 1] == Direction.RIGHT.getValue()) {
+        if (startPosition >= row.length - 1 || startPosition < 0 || row[startPosition] == LEFT.getValue() || row[startPosition + 1] == RIGHT.getValue()) {
             throw new IllegalArgumentException("사다리를 그릴 수 없는 위치입니다.");
         }
     }
