@@ -1,24 +1,18 @@
 package ladder;
 
+import ladder.creator.LadderCreator;
+
 public class Ladder {
 
-    private final Row[] rows;
+    private final LadderCreator ladderCreator;
 
-    public Ladder(GreaterThanOne numberOfRow, GreaterThanOne numberOfPerson) {
-        rows = new Row[numberOfRow.getNumber()];
-        for (int i = 0; i < numberOfRow.getNumber(); i++) {
-            rows[i] = new Row(numberOfPerson);
-        }
-    }
-
-    public void drawLine(Position row, Position col) {
-        rows[row.getValue()].drawLine(col);
+    public Ladder(LadderCreator ladderCreator) {
+        this.ladderCreator = ladderCreator;
     }
 
     public int run(Position position) {
-        for (int i = 0; i < rows.length; i++) {
-            rows[i].nextPosition(position);
-        }
+        LadderRunner ladderRunner = new LadderRunner(ladderCreator.getRows());
+        ladderRunner.run(position);
         return position.getValue();
     }
 }
