@@ -3,43 +3,31 @@ package ladder;
 import static ladder.Direction.*;
 
 public class Row {
-    private final int[] row;
+    private final Node[] nodes;
 
     public Row(GreaterThanOne numberOfPerson) {
-        row = new int[numberOfPerson.getNumber()];
+        nodes = new Node[numberOfPerson.getNumber()];
+        for (int i = 0; i < numberOfPerson.getNumber(); i++) {
+            nodes[i] = Node.from(NONE);
+        }
     }
 
     public void drawLine(Position startPosition) {
         validateDrawLinePosition(startPosition);
-        setDirectionAtPosition(startPosition, RIGHT);
-        startPosition.next();
-        setDirectionAtPosition(startPosition, LEFT);
-    }
 
-    private void setDirectionAtPosition(Position startPosition, Direction direction) {
-        row[startPosition.getValue()] = direction.getValue();
+        setDirectionBetweenNextPosition(startPosition);
     }
 
     public void nextPosition(Position position) {
         validatePosition(position);
 
-        if (isRight(position)) {
-            position.next();
-            return;
-        }
-        if (isLeft(position)) {
-            position.prev();
-            return;
-        }
-
+        nodes[position.getValue()].move(position);
     }
 
-    private boolean isLeft(Position position) {
-        return row[position.getValue()] == LEFT.getValue();
-    }
-
-    private boolean isRight(Position position) {
-        return row[position.getValue()] == RIGHT.getValue();
+    private void setDirectionBetweenNextPosition(Position position) {
+        nodes[position.getValue()].setRightNode();
+        position.next();
+        nodes[position.getValue()].setLeftNode();
     }
 
     private void validatePosition(Position position) {
@@ -56,15 +44,18 @@ public class Row {
     }
 
     private boolean isInvalidPosition(Position position) {
-        return position.isBiggerThan(row.length - 1) ;
+        return position.isBiggerThan(nodes.length - 1) ;
     }
 
     private boolean isLineAtPosition(Position position) {
-        return row[position.getValue()] != NONE.getValue();
+        return !nodes[position.getValue()].isAlreadySetDirection();
     }
 
     private boolean isLineAtNextPosition(Position position) {
-        return row[position.getValue() + 1] == RIGHT.getValue();
+        position.next();
+        boolean lineAtPosition = isLineAtPosition(position);
+        position.prev();
+        return lineAtPosition;
     }
 
 }
